@@ -3,7 +3,7 @@ const getAnimeUrl = (curl) => {
   const linkRegex = /<a\shref="([^"]*)">/;
   const titleRegex = /title="([^"]*)">/;
 
-  const content = curl.match(getResultsRegex);
+  const content = curl.match(getResultsRegex) || [];
   const results = content.reduce((acc, x, i) => {
     const link = content[i].match(linkRegex)[1];
     const title = content[i].match(titleRegex)[1];

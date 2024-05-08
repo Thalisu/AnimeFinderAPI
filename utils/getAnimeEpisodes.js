@@ -10,7 +10,7 @@ const getAnimeEpisodes = (curl) => {
   const getEpRegex = /<a id="([^"]*)" href="([^"]*)"/;
 
   const episodeContainer = curl.match(getResultsRegex)[1];
-  const li = episodeContainer.match(getLiRegex);
+  const li = episodeContainer.match(getLiRegex) || [];
   const results = li.reduce((acc, x, i) => {
     const [all, ep, link] = li[i].match(getEpRegex);
     const parsedEp = animeEpsParser(ep);
