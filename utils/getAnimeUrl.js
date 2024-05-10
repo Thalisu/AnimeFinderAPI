@@ -5,9 +5,9 @@ const getAnimeUrl = (curl) => {
 
   const content = curl.match(getResultsRegex) || [];
   const results = content.reduce((acc, x, i) => {
-    const link = content[i].match(linkRegex)[1];
+    const link = content[i].match(linkRegex)[1].substr(24);
     const title = content[i].match(titleRegex)[1];
-    return acc.concat({ value: link.substr(24), label: title });
+    return acc.concat({ value: link, label: title });
   }, []);
 
   return results;

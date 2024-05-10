@@ -3,11 +3,14 @@ const fetchUrl = async (url) => {
     method: "GET",
     redirect: "follow",
   };
-
-  const response = await fetch(url, requestOptions).then((response) =>
-    response.text()
-  );
-  return response;
+  try {
+    const response = await fetch(url, requestOptions).then((response) =>
+      response.text()
+    );
+    return response;
+  } catch (err) {
+    return new Error(err);
+  }
 };
 
 module.exports = fetchUrl;

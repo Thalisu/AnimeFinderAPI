@@ -1,5 +1,6 @@
 const express = require("express");
-const getAnimeRouter = require("./controllers/getAnime");
+const animeRouter = require("./controllers/animeRouter");
+const calendarRouter = require("./controllers/calendarRouter");
 const cors = require("cors");
 
 const app = express();
@@ -10,6 +11,7 @@ app.use(
   })
 );
 
-app.use("/api", getAnimeRouter);
+app.use("/api/anime", animeRouter);
+app.use("/api/calendar", calendarRouter);
 
 module.exports = app;
