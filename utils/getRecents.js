@@ -1,16 +1,18 @@
 const getRecents = (html) => {
-  getRecentBoxRegex = /Últimos\sEp.*?<div\sclass="post(.*?)<\/a><\/div>/;
-  getArticlesRegex = /<article.*?>.*?<\/article>/g;
-  getTitle = /div\sclass="title">(.*?)<\/div>/;
-  getEpTitle = /div\sclass="titleEP">(.*?)<\/div>/;
+  const getRecentBoxRegex = /Últimos\sEp.*?<div\sclass="post(.*?)<\/a><\/div>/;
+  const getArticlesRegex = /<article.*?>.*?<\/article>/g;
+  const getTitle = /div\sclass="title">(.*?)<\/div>/;
+  const getEpTitle = /div\sclass="titleEP">(.*?)<\/div>/;
+  const getLinkRegex = /<a\shref="([^"]*)">/;
 
   const articles = html.match(getRecentBoxRegex)[0].match(getArticlesRegex);
-  console.log(articles);
 
   const eps = articles.reduce((acc, a) => {
     const title = a.match(getTitle)[1];
     const epTitle = a.match(getEpTitle)[1];
-    return acc.concat({ title, epTitle });
+    const label = `${title} - ${epTitle}`;
+    const link = a.match(getLinkRegex)[1].substr(18);
+    return acc.concat({ label, value: link });
   }, []);
   return eps;
 };
