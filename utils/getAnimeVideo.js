@@ -1,7 +1,7 @@
-const getAnimeVideo = (curl) => {
+const getAnimeVideo = (html) => {
   const getVideoRegex = /<iframe class="metaframe rptss" src="(.*?)"/;
 
-  const video = curl.match(getVideoRegex)[1];
+  const video = html.match(getVideoRegex)[1];
 
   return video;
 };
