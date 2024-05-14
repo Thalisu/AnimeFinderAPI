@@ -10,7 +10,7 @@ const getRecents = (html) => {
   const eps = articles.reduce((acc, a) => {
     let title = a.match(getTitle)[1];
     if (title.length > 50) {
-      title = title.substr(0, 60);
+      title = title.substring(0, 60);
     }
 
     const epTitle = a.match(getEpTitle)[1];
