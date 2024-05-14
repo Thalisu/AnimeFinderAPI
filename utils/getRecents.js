@@ -8,7 +8,11 @@ const getRecents = (html) => {
   const articles = html.match(getRecentBoxRegex)[0].match(getArticlesRegex);
 
   const eps = articles.reduce((acc, a) => {
-    const title = a.match(getTitle)[1];
+    let title = a.match(getTitle)[1];
+    if (title.length > 50) {
+      title.substr(0, 60);
+    }
+
     const epTitle = a.match(getEpTitle)[1];
     const label = `${title} - ${epTitle}`;
     const link = a.match(getLinkRegex)[1].substr(18);
