@@ -1,12 +1,16 @@
 const { baseCalendarUrl } = require("./config");
 
 const getCalendar = (dataArray) => {
-  const getCardContainer = /<ul\sclass=".*?iUXLfp">(.*?)<\/ul>/;
+  const getCardContainer =
+    /<ul(?!.*?<ul).*?>.*?<div.*?conte.*?-.*?me.*?(?:(?!<\/ul>).)*<\/ul>/;
   const getCards = /<li.*?>.*?<\/li>/g;
   const getImg = /<img.*?src="(.*?)"/;
   const getTitle = /class="title">(.*?)</;
 
   const data = dataArray.reduce((acc, curl, i) => {
+    if (curl instanceof Error) {
+      throw new Error(curl);
+    }
     const day =
       i === 0
         ? "Domingo"
@@ -21,12 +25,13 @@ const getCalendar = (dataArray) => {
         : i === 5
         ? "Sexta"
         : "Sabado";
+    const cardContainer = curl.match(getCardContainer);
 
-    const cardContainer = curl.match(getCardContainer)[1];
-
-    const cards = cardContainer.match(getCards);
+    console.log(cardContainer[0]);
+    const cards = cardContainer[0].match(getCards);
 
     const data = cards.reduce((acc, c) => {
+      console.log(c);
       const img = `${baseCalendarUrl}${c
         .match(getImg)[1]
         .replaceAll("amp;", "")}`;
