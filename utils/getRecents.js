@@ -4,6 +4,7 @@ const getRecents = (html) => {
   const getTitle = /div\sclass="title">(.*?)<\/div>/;
   const getEpTitle = /div\sclass="titleEP">(.*?)<\/div>/;
   const getLinkRegex = /<a\shref="([^"]*)">/;
+  const imgRegex = /<img\ssrc="([^"]*)"/;
 
   const articles = html.match(getRecentBoxRegex)[0].match(getArticlesRegex);
 
@@ -16,7 +17,8 @@ const getRecents = (html) => {
     const epTitle = a.match(getEpTitle)[1];
     const label = `${title} - ${epTitle}`;
     const link = a.match(getLinkRegex)[1].substr(18);
-    return acc.concat({ label, value: link });
+    const img = a.match(imgRegex)[1];
+    return acc.concat({ label, value: link, img });
   }, []);
   return eps;
 };
